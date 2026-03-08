@@ -5,37 +5,32 @@ export default function About() {
   return (
     <section id="about" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-12 mb-16">
-          <div className="lg:w-1/4">
-            <div className="flex items-center gap-2">
+        <div className="mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-2 mb-4">
               <span className="w-3 h-3 bg-red-600 rounded-sm"></span>
-              <span className="font-bold text-gray-900">About us</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">About Us</h2>
             </div>
-          </div>
-          <div className="lg:w-3/4">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-8">
+            <p className="text-lg text-gray-600 leading-relaxed">
               At Ideal Power, We're Committed To Quality Workmanship And Dependable Service. Our Certified Team Delivers Expert Electrical Solutions For Homes And Businesses Alike.
-            </h2>
-            <button className="bg-yellow-500 text-black px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors">
-              More About Us
-            </button>
+            </p>
           </div>
+          <button className="bg-yellow-500 text-black px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors shrink-0">
+            More About Us
+          </button>
         </div>
 
         {/* Video/Image Section */}
-        <div className="relative w-full h-[500px] rounded-3xl overflow-hidden mb-0">
-          <img 
-            src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=2069&auto=format&fit=crop" 
-            alt="Electrician working" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-            <button className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:scale-110 transition-transform cursor-pointer group">
-              <div className="w-14 h-14 bg-black rounded-full flex items-center justify-center group-hover:bg-red-600 transition-colors">
-                <Play className="w-6 h-6 text-white ml-1" fill="currentColor" />
-              </div>
-            </button>
-          </div>
+        <div className="relative w-full h-[500px] rounded-3xl overflow-hidden mb-0 bg-black">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="w-full h-full object-cover opacity-80"
+          >
+            <source src="/images/Video_Generation_With_New_Settings.mp4" type="video/mp4" />
+          </video>
         </div>
 
         {/* Stats Bar */}

@@ -27,17 +27,15 @@ export default function Process() {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-12 mb-16">
-          <div className="lg:w-1/4">
-            <div className="flex items-center gap-2">
+        <div className="mb-16">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-2 mb-4">
               <span className="w-3 h-3 bg-red-600 rounded-sm"></span>
-              <span className="font-bold text-gray-900">Why Choose Us</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Why Choose Us</h2>
             </div>
-          </div>
-          <div className="lg:w-3/4">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+            <p className="text-lg text-gray-600 leading-relaxed">
               Enjoy Fast, Reliable Service, Expert Solutions, And Long-Term Value All The Benefits You Need, Right At Your Fingertips.
-            </h2>
+            </p>
           </div>
         </div>
 
@@ -45,8 +43,8 @@ export default function Process() {
           <div className="lg:w-1/2">
             <div className="rounded-3xl overflow-hidden h-full min-h-[500px]">
               <img 
-                src="https://images.unsplash.com/photo-1544724569-5f546fd6dd2d?q=80&w=2069&auto=format&fit=crop" 
-                alt="Electrician working" 
+                src="/images/commercial-electrician-melbourne.jpeg" 
+                alt="Commercial electrician in Melbourne" 
                 className="w-full h-full object-cover"
               />
             </div>
@@ -56,7 +54,7 @@ export default function Process() {
               {steps.map((step, index) => (
                 <div key={index} className="flex gap-6">
                   <div className="flex flex-col items-center">
-                    <div className="text-xs font-bold text-gray-400 mb-2">STEP {step.id}</div>
+                    <div className="text-xs font-bold text-gray-400 mb-2">{step.id}</div>
                     <div className="w-2 h-2 bg-black rounded-full"></div>
                     {index !== steps.length - 1 && <div className="w-px h-full bg-gray-200 my-2"></div>}
                   </div>

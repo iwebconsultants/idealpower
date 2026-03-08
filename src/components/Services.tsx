@@ -4,7 +4,7 @@ import { ArrowUpRight } from 'lucide-react';
 const services = [
   {
     title: "Electrical Panel Upgrades",
-    image: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=2069&auto=format&fit=crop",
+    image: "/images/electrical-switchboard-installation.jpg",
     dark: true
   },
   {
@@ -14,22 +14,22 @@ const services = [
   },
   {
     title: "Emergency Electrical Services",
-    image: "https://images.unsplash.com/photo-1544724569-5f546fd6dd2d?q=80&w=2069&auto=format&fit=crop",
+    image: "/images/electrician-working-switchboard-cables.jpg",
     dark: true
   },
   {
     title: "Electrical Repairs",
-    image: "https://images.unsplash.com/photo-1558402529-d2638a7023e9?q=80&w=2069&auto=format&fit=crop",
+    image: "/images/commercial-electrician-melbourne.jpeg",
     dark: true
   },
   {
     title: "Lighting Installation & Upgrades",
-    image: "https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?q=80&w=2070&auto=format&fit=crop",
+    image: "/images/local-electrician.jpeg",
     dark: true
   },
   {
     title: "Wiring & Rewiring Services",
-    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop",
+    image: "/images/residential-electrician-services.webp",
     dark: true
   }
 ];
@@ -38,21 +38,19 @@ export default function Services() {
   return (
     <section id="services" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-12 mb-16">
-          <div className="lg:w-1/4">
-            <div className="flex items-center gap-2">
+        <div className="mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-2 mb-4">
               <span className="w-3 h-3 bg-red-600 rounded-sm"></span>
-              <span className="font-bold text-gray-900">Our Services</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Our Services</h2>
             </div>
-          </div>
-          <div className="lg:w-3/4 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight max-w-2xl">
+            <p className="text-lg text-gray-600 leading-relaxed">
               We Provide Complete Electrical Services For Homes And Businesses From Repairs And Upgrades To Full Installations. Safe, Reliable, & Always Done Right.
-            </h2>
-            <button className="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors whitespace-nowrap">
-              View All Services
-            </button>
+            </p>
           </div>
+          <button className="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors shrink-0 whitespace-nowrap">
+            View All Services
+          </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -61,8 +59,8 @@ export default function Services() {
                     {service.image && (
                         <img 
                             src={service.image} 
-                            alt={service.title} 
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-60 group-hover:opacity-40"
+                            alt={`Ideal Power Service: ${service.title}`} 
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-60 group-hover:opacity-40 motion-reduce:transform-none"
                         />
                     )}
                     <div className="absolute inset-0 p-8 flex flex-col justify-end">

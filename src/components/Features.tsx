@@ -32,17 +32,15 @@ export default function Features() {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-12 mb-16">
-          <div className="lg:w-1/4">
-            <div className="flex items-center gap-2">
+        <div className="mb-16">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-2 mb-4">
               <span className="w-3 h-3 bg-red-600 rounded-sm"></span>
-              <span className="font-bold text-gray-900">Why us?</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Why Us?</h2>
             </div>
-          </div>
-          <div className="lg:w-3/4">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+            <p className="text-lg text-gray-600 leading-relaxed">
               Dependable, Efficient Electrical Services Delivered By Trusted Professionals On Time, On Budget, And Done Right The First Time.
-            </h2>
+            </p>
           </div>
         </div>
 

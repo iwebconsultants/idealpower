@@ -7,14 +7,14 @@ const testimonials = [
     role: "CEO, Elevate PR Group",
     text: "The level of professionalism and attention to detail is unmatched. They truly understand our needs and deliver beyond expectations.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"
+    image: "/images/local-electrician.jpeg"
   },
   {
     name: "Clarissa Johnson",
     role: "CEO, Elevate PR Group",
     text: "The level of professionalism and attention to detail is unmatched. They truly understand our needs and deliver beyond expectations.",
     rating: 5,
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
+    image: "/images/electrical-contractor-team.png"
   }
 ];
 
@@ -22,17 +22,15 @@ export default function Testimonials() {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-12 mb-16">
-          <div className="lg:w-1/4">
-            <div className="flex items-center gap-2">
+        <div className="mb-16">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-2 mb-4">
               <span className="w-3 h-3 bg-red-600 rounded-sm"></span>
-              <span className="font-bold text-gray-900">Our clients say</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Our Clients Say</h2>
             </div>
-          </div>
-          <div className="lg:w-3/4">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+            <p className="text-lg text-gray-600 leading-relaxed">
               We're proud to cultivate strong client relationships. See what our clients have to say.
-            </h2>
+            </p>
           </div>
         </div>
 

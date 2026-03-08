@@ -103,21 +103,20 @@ export default function Hero() {
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative z-10 w-full max-w-md"
+                className="relative z-10 w-full md:max-w-md h-full min-h-[500px] flex items-center justify-center"
               >
                 <video
                   autoPlay
                   loop
                   muted
                   playsInline
-                  className="w-full h-auto object-cover rounded-3xl shadow-2xl border border-white/10 mask-image-gradient"
+                  className="absolute inset-0 w-full h-full object-cover md:rounded-3xl shadow-2xl md:border border-white/10 mask-image-gradient"
                   style={{ 
                     maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
                     WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
                   }}
                 >
-                  <source src="https://videos.pexels.com/video-files/8964657/8964657-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+                  <source src="/images/electrician-video-generation.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
                 
@@ -136,7 +135,7 @@ export default function Hero() {
           {/* Layer 3: Right Content (Stats & Info) */}
           <motion.div 
             style={{ x: floatX, y: floatY }}
-            className="lg:col-span-3 flex flex-col justify-between h-full py-12 order-3 lg:order-3 space-y-12 lg:space-y-0"
+            className="lg:col-span-3 flex flex-col justify-between h-full py-12 order-3 lg:order-3 space-y-12 lg:space-y-0 relative z-20"
           >
             {/* Top: Social Proof */}
             <motion.div 
@@ -147,9 +146,9 @@ export default function Hero() {
             >
               <div className="flex items-center -space-x-4 mb-4">
                 {[
-                  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop",
-                  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop",
-                  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
+                  "/images/local-electrician.jpeg",
+                  "/images/electrical-contractor-team.png",
+                  "/images/commercial-electrician-melbourne.jpeg"
                 ].map((src, i) => (
                   <div key={i} className="w-12 h-12 rounded-full border-2 border-black overflow-hidden">
                     <img src={src} alt="Client" className="w-full h-full object-cover" />
