@@ -38,7 +38,7 @@ export default function About() {
             playsInline
             className="w-full h-full object-cover opacity-80"
           >
-            <source src="/images/electrician-in-field.mp4" type="video/mp4" />
+            <source src="/images/electrician-in-field-resized.mp4" type="video/mp4" />
           </video>
         </div>
 
