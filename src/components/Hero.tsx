@@ -1,9 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
 import { ArrowRight, Star, CheckCircle2, Zap, ShieldCheck } from 'lucide-react';
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(e => console.log("Safari auto-play prevented this:", e));
+    }
+  }, []);
+
   const { scrollY } = useScroll();
   
   // Mouse movement state
@@ -106,6 +114,7 @@ export default function Hero() {
                 className="relative z-10 w-full md:max-w-md h-full min-h-[500px] flex items-center justify-center"
               >
                 <video
+                  ref={videoRef}
                   autoPlay
                   loop
                   muted

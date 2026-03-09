@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Play } from 'lucide-react';
 
 export default function About() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(e => console.log("Safari auto-play prevented this:", e));
+    }
+  }, []);
+
   return (
     <section id="about" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,6 +31,7 @@ export default function About() {
         {/* Video/Image Section */}
         <div className="relative w-full h-[500px] rounded-3xl overflow-hidden mb-0 bg-black">
           <video 
+            ref={videoRef}
             autoPlay 
             loop 
             muted 
