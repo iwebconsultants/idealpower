@@ -116,7 +116,7 @@ export default function Hero() {
                     WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
                   }}
                 >
-                  <source src="/images/electrician-video-generation.mp4" type="video/mp4" />
+                  <source src="/images/Video_Generation_With_New_Settings.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
                 
