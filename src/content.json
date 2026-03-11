@@ -1,10 +1,10 @@
 {
-  "smtpPort": "587",
-  "smtpUser": "info@idealpower.com.au",
-  "aboutText": "At Idealpower, we are committed to helping you achieve energy independence...",
-  "heroHeadline": "Premium Solar &\nBattery\nInstallations",
-  "smtpHost": "smtp.gmail.com",
   "contactEmail": "info@idealpower.com.au",
   "smtpPass": "Sameersameer991996",
-  "contactPhone": "0450 500 803"
+  "smtpPort": "587",
+  "contactPhone": "0450 500 803",
+  "aboutText": "At Idealpower, we are committed to helping you achieve energy independence...",
+  "heroHeadline": "Premium Solar &\nBattery\nInstallations",
+  "smtpUser": "info@idealpower.com.au",
+  "smtpHost": "smtp.gmail.com"
 }
