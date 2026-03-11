@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
 import { ArrowRight, Star, CheckCircle2, Zap, ShieldCheck } from 'lucide-react';
+import contentData from '../content.json';
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -81,10 +82,8 @@ export default function Hero() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[0.9] tracking-tight mb-8">
-                Premium Solar & <br />
-                <span className="text-yellow-500 text-6xl md:text-7xl lg:text-8xl">Battery</span> <br />
-                <span className="text-4xl md:text-5xl lg:text-5xl">Installations</span>
+              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight mb-8 whitespace-pre-wrap">
+                {contentData.heroHeadline}
               </h1>
               
               <motion.a 

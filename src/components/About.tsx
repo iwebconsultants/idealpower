@@ -1,5 +1,6 @@
 import React from 'react';
 import { Play } from 'lucide-react';
+import contentData from '../content.json';
 
 export default function About() {
   return (
@@ -11,8 +12,8 @@ export default function About() {
               <span className="w-3 h-3 bg-red-600 rounded-sm"></span>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">About Us</h2>
             </div>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              At Idealpower, we are committed to helping you achieve energy independence. Our certified team delivers expert Solar and Battery Installations, along with complete electrical solutions for homes and businesses.
+            <p className="text-lg text-gray-600 leading-relaxed whitespace-pre-wrap">
+              {contentData.aboutText}
             </p>
           </div>
           <button className="bg-yellow-500 text-black px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors shrink-0">

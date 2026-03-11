@@ -14,6 +14,11 @@ import TermsPage from './pages/TermsPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import ContactPage from './pages/ContactPage';
 
+// Admin Pages
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
+
 export default function App() {
   return (
     <HelmetProvider>
@@ -25,20 +30,33 @@ export default function App() {
             <meta name="keywords" content="electrician, sydney, electrical services, emergency electrician, wiring, lighting, switchboard upgrades" />
           </Helmet>
           
-          <Header />
-          <ScrollToTop />
-          
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/terms-of-service" element={<TermsPage />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            {/* Public App Routes with Header/Footer */}
+            <Route path="/*" element={
+              <>
+                <Header />
+                <ScrollToTop />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/services" element={<ServicesPage />} />
+                  <Route path="/projects" element={<ProjectsPage />} />
+                  <Route path="/terms-of-service" element={<TermsPage />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                </Routes>
+                <Footer />
+              </>
+            } />
+
+            {/* Admin Routes without main Header/Footer */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/*" element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />
           </Routes>
-          
-          <Footer />
         </div>
       </Router>
     </HelmetProvider>

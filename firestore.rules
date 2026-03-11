@@ -1,0 +1,26 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if the user is signed in with a specific email
+    function isAllowedAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == 'info@idealpower.com.au' || 
+        request.auth.token.email == 'azam@anigravity.com'
+      );
+    }
+    
+    // Website Settings and CMS content 
+    match /site_settings/{document} {
+      // Anyone can read (if you later want to fetch live on the frontend)
+      // but right now only the build script fetches via admin/REST which bypasses these rules anyway.
+      allow read: if true; 
+      
+      // ONLY the allowed admin Google accounts can write/edit the website settings!
+      allow write: if isAllowedAdmin();
+      allow update: if isAllowedAdmin();
+      allow delete: if isAllowedAdmin();
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import contentData from '../content.json';
 
 export default function Footer() {
   return (
@@ -12,7 +13,7 @@ export default function Footer() {
                     We're here to fix your electrical problems quickly and safely.
                 </h2>
                 <button className="bg-orange-500 text-white px-8 py-3 rounded-full font-bold hover:bg-orange-600 transition-colors">
-                    0450 500 803
+                    {contentData.contactPhone}
                 </button>
             </div>
         </div>
@@ -62,11 +63,11 @@ export default function Footer() {
                 <ul className="space-y-4 text-sm text-gray-400">
                     <li className="flex items-center gap-3">
                         <Phone className="w-4 h-4" />
-                        <span>0450 500 803</span>
+                        <span>{contentData.contactPhone}</span>
                     </li>
                     <li className="flex items-center gap-3">
                         <Mail className="w-4 h-4" />
-                        <span>info@idealpower.com.au</span>
+                        <span>{contentData.contactEmail}</span>
                     </li>
                     <li className="flex items-center gap-3">
                         <MapPin className="w-4 h-4" />

@@ -1,4 +1,5 @@
 import React from 'react';
+import contentData from '../content.json';
 
 export default function Contact() {
   return (
@@ -14,11 +15,11 @@ export default function Contact() {
             </p>
             
             <div className="space-y-4 mb-12">
-                <a href="mailto:info@idealpower.com.au" className="block text-gray-900 text-lg hover:text-red-600 transition-colors">
-                    info@idealpower.com.au
+                <a href={`mailto:${contentData.contactEmail}`} className="block text-gray-900 text-lg hover:text-red-600 transition-colors">
+                    {contentData.contactEmail}
                 </a>
-                <a href="tel:0450500803" className="block text-gray-900 text-lg hover:text-red-600 transition-colors">
-                    Mob: 0450 500 803
+                <a href={`tel:${contentData.contactPhone.replace(/\s+/g, '')}`} className="block text-gray-900 text-lg hover:text-red-600 transition-colors">
+                    Mob: {contentData.contactPhone}
                 </a>
                 <div className="text-gray-900 text-lg">
                     13 Seaeagle Cres, Green Valley<br/>NSW 2168
