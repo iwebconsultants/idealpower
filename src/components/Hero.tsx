@@ -81,10 +81,10 @@ export default function Hero() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="font-display text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-[0.9] tracking-tight mb-8">
-                Engineering the <br />
-                <span className="text-yellow-500 text-7xl md:text-8xl lg:text-9xl">Ideal Power</span> <br />
-                <span className="text-4xl md:text-5xl lg:text-6xl">Solutions</span>
+              <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[0.9] tracking-tight mb-8">
+                Premium Solar & <br />
+                <span className="text-yellow-500 text-6xl md:text-7xl lg:text-8xl">Battery</span> <br />
+                <span className="text-4xl md:text-5xl lg:text-5xl">Installations</span>
               </h1>
               
               <motion.a 
@@ -125,7 +125,7 @@ export default function Hero() {
                     WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
                   }}
                 >
-                  <source src="/images/electrician-on-panel-resized.mp4" type="video/mp4" />
+                  <source src="/images/Australian_Technician_Installs_Home_Battery%20(1).mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
                 
@@ -135,7 +135,7 @@ export default function Hero() {
                   className="absolute -right-6 top-1/4 bg-red-600 text-white p-4 rounded-2xl shadow-xl border border-red-500/50 hidden sm:block"
                 >
                   <ShieldCheck className="h-8 w-8 mb-1" />
-                  <div className="font-bold text-sm">Fully<br/>Insured</div>
+                  <div className="font-bold text-sm">Govt.<br/>Rebates</div>
                 </motion.div>
               </motion.div>
             </div>
@@ -183,10 +183,9 @@ export default function Hero() {
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-yellow-500 to-red-600 rounded-full lg:hidden" />
               <div className="hidden lg:block absolute -top-6 left-0 w-12 h-1 bg-yellow-500 rounded-full" />
               
-              <h3 className="text-3xl font-bold text-white mb-2">Your Trusted Experts</h3>
-              <p className="text-gray-400 text-xs leading-relaxed">
-                At Ideal Power, we deliver fast, reliable fixes and expert installations. 
-                Whether it's wiring, lighting, or emergency repairs, we've got you covered.
+              <h3 className="text-3xl font-bold text-white mb-2">Your Solar Experts</h3>
+              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                Idealpower specializes in Solar and Battery Installation across Sydney. We are fully compliant with Australian Standards, providing reliable systems eligible for Government Rebates.
               </p>
             </motion.div>
           </motion.div>

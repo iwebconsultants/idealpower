@@ -3,14 +3,25 @@ import { ArrowUpRight } from 'lucide-react';
 
 const services = [
   {
-    title: "Electrical Panel Upgrades",
-    image: "/images/electrical-switchboard-installation.jpg",
+    title: "Solar Panel Installation",
+    image: "/images/SolarSystem.jpg",
     dark: true
   },
   {
-    title: "Surge Protection Installation",
-    description: "Protect Your Property From Power Surges With Professionally Installed Surge Protection. Keep Your Electronics And Electrical Systems Safe And Secure.",
-    orange: true
+    title: "Battery Storage Solutions",
+    description: "Store your own energy with Premium Fox ESS Home Battery Systems. Maximize savings and gain energy independence.",
+    image: "/images/Fox-ESS-EQ4800.webp",
+    dark: true
+  },
+  {
+    title: "Solar & Battery Packages",
+    image: "/images/SolarandBatteries.webp",
+    dark: true
+  },
+  {
+    title: "Electrical Panel Upgrades",
+    image: "/images/electrical-switchboard-installation.jpg",
+    dark: true
   },
   {
     title: "Emergency Electrical Services",
@@ -18,17 +29,7 @@ const services = [
     dark: true
   },
   {
-    title: "Electrical Repairs",
-    image: "/images/commercial-electrician-melbourne.jpeg",
-    dark: true
-  },
-  {
-    title: "Lighting Installation & Upgrades",
-    image: "/images/local-electrician.jpeg",
-    dark: true
-  },
-  {
-    title: "Wiring & Rewiring Services",
+    title: "Lighting & Wiring",
     image: "/images/residential-electrician-services.webp",
     dark: true
   }
@@ -45,7 +46,7 @@ export default function Services() {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Our Services</h2>
             </div>
             <p className="text-lg text-gray-600 leading-relaxed">
-              We Provide Complete Electrical Services For Homes And Businesses From Repairs And Upgrades To Full Installations. Safe, Reliable, & Always Done Right.
+              We specialize in Tier-1 Solar Data and Battery Installation, alongside complete Electrical Services for homes and businesses. Safe, Reliable, & Government Rebate Compliant.
             </p>
           </div>
           <button className="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors shrink-0 whitespace-nowrap">

@@ -22,8 +22,8 @@ const features = [
   },
   {
     icon: Wrench,
-    title: "Trusted Experts",
-    description: "With Years Of Experience And A Commitment To Excellence, Our Team Of Trusted Experts Delivers Reliable Electrical Solutions. Whether It's Routine Maintenance Or Emergency Repairs, You Can Count On Us For Safe, Efficient, And Top-Quality Service.",
+    title: "Solar Specialists",
+    description: "Our fully certified technicians specialize in tailored Solar and Battery installations. From consultation to setup and maintenance, we ensure your home runs safely and efficiently on renewable energy.",
     color: "bg-gray-100 text-gray-600"
   }
 ];
@@ -39,7 +39,7 @@ export default function Features() {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Why Us?</h2>
             </div>
             <p className="text-lg text-gray-600 leading-relaxed">
-              Dependable, Efficient Electrical Services Delivered By Trusted Professionals On Time, On Budget, And Done Right The First Time.
+              Dependable, Efficient Solar & Electrical Services Delivered By Trusted Professionals On Time, On Budget, And Done Right The First Time.
             </p>
           </div>
         </div>

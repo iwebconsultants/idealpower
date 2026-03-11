@@ -1,15 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Play } from 'lucide-react';
 
 export default function About() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(e => console.log("Safari auto-play prevented this:", e));
-    }
-  }, []);
-
   return (
     <section id="about" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,7 +12,7 @@ export default function About() {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">About Us</h2>
             </div>
             <p className="text-lg text-gray-600 leading-relaxed">
-              At Ideal Power, We're Committed To Quality Workmanship And Dependable Service. Our Certified Team Delivers Expert Electrical Solutions For Homes And Businesses Alike.
+              At Idealpower, we are committed to helping you achieve energy independence. Our certified team delivers expert Solar and Battery Installations, along with complete electrical solutions for homes and businesses.
             </p>
           </div>
           <button className="bg-yellow-500 text-black px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors shrink-0">
@@ -30,16 +22,11 @@ export default function About() {
 
         {/* Video/Image Section */}
         <div className="relative w-full h-[500px] rounded-3xl overflow-hidden mb-0 bg-black">
-          <video 
-            ref={videoRef}
-            autoPlay 
-            loop 
-            muted 
-            playsInline
+          <img 
+            src="/images/solar-batteries-install-hero.webp" 
+            alt="Solar Battery Installation" 
             className="w-full h-full object-cover opacity-80"
-          >
-            <source src="/images/electrician-in-field-resized.mp4" type="video/mp4" />
-          </video>
+          />
         </div>
 
         {/* Stats Bar */}
