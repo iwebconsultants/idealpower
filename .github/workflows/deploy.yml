@@ -28,6 +28,25 @@ jobs:
       - name: Verify Build Output
         run: ls -R dist
 
+      - name: Save Service Account Key Safely
+        env:
+          FIREBASE_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_IDEALPOWER_SYDNEY }}
+        shell: python
+        run: |
+          import os, json
+          key_str = os.environ.get('FIREBASE_KEY', '').strip()
+          try:
+              # Validate and re-format JSON to ensure it is clean
+              key_data = json.loads(key_str)
+              with open('firebase-key.json', 'w') as f:
+                  json.dump(key_data, f)
+              print("Successfully saved sanitized service account key.")
+          except Exception as e:
+              print(f"FAILED TO PARSE FIREBASE KEY JSON: {e}")
+              # Write it as-is if it's not valid JSON to let the next step fail with a clearer error
+              with open('firebase-key.json', 'w') as f:
+                  f.write(key_str)
+
       - name: Deploy to Firebase Hosting Live
         if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
         uses: FirebaseExtended/action-hosting-deploy@v0
