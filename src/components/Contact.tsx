@@ -95,7 +95,7 @@ export default function Contact() {
           <div className="lg:w-1/2">
             <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-xl shadow-gray-200/50">
                 <div className="mb-8">
-                    <h3 className="text-3xl font-bold text-gray-900 mb-2">Get in Touch (Latest)</h3>
+                    <h3 className="text-3xl font-bold text-gray-900 mb-2">Get in Touch</h3>
                     <p className="text-gray-500">You can reach us anytime</p>
                 </div>
 
