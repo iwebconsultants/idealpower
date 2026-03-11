@@ -7,7 +7,7 @@ import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyD1AD4_oJUdgBtrLoQiwBO4BocRfeKKig0",
   authDomain: "idealpower-sydney.firebaseapp.com",
-  projectId: "1062273457899",
+  projectId: "idealpower-sydney",
   storageBucket: "idealpower-sydney.firebasestorage.app",
   messagingSenderId: "1062273457899",
   appId: "1:1062273457899:web:6f505c6d609a07ab6d68ae"

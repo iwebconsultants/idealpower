@@ -3,7 +3,7 @@ import path from 'path';
 
 // Using fetch to get data from Firestore REST API avoids needing the heavy firebase-admin SDK
 // Project ID: 1062273457899
-const PROJECT_ID = "1062273457899";
+const PROJECT_ID = "idealpower-sydney";
 const URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/site_settings/main`;
 
 console.log(`[Build] Fetching latest CMS content from Firestore...`);
