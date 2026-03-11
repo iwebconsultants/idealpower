@@ -36,8 +36,9 @@ jobs:
       - name: Deploy to Firebase Hosting Live
         if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
         run: |
+          set -x
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_IDEALPOWER_SYDNEY }}' > firebase-key.json
-          export GOOGLE_APPLICATION_CREDENTIALS=firebase-key.json
-          npx firebase-tools deploy --only hosting --project idealpower-sydney --non-interactive
+          export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/firebase-key.json
+          npx firebase-tools deploy --only hosting --site idealpower-sydney --project idealpower-sydney --non-interactive
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: firebase-key.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase-key.json
