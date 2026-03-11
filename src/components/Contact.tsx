@@ -1,7 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import contentData from '../content.json';
+import { db } from '../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import toast from 'react-hot-toast';
 
 export default function Contact() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, placeholder, value } = e.target;
+    // Map placeholders to keys if name is missing
+    const key = name || (placeholder.toLowerCase().includes('first') ? 'firstName' : 
+                         placeholder.toLowerCase().includes('last') ? 'lastName' :
+                         placeholder.toLowerCase().includes('email') ? 'email' :
+                         placeholder.toLowerCase().includes('phone') ? 'phone' : 'message');
+    
+    setFormData(prev => ({ ...prev, [key]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.email || !formData.message) {
+      toast.error("Please fill in your email and message.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, 'contact_submissions'), {
+        ...formData,
+        status: 'pending',
+        createdAt: serverTimestamp()
+      });
+      
+      toast.success("Message sent! We'll get back to you soon.");
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
+    } catch (error: any) {
+      console.error("Error submitting form:", error);
+      toast.error("Failed to send message. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,7 +68,7 @@ export default function Contact() {
                 Reach out to us for any electrical needs. Whether it's a quick repair or a major installation, our team is ready to help you with expert solutions.
             </p>
             
-            <div className="space-y-4 mb-12">
+          <div className="space-y-4 mb-12">
                 <a href={`mailto:${contentData.contactEmail}`} className="block text-gray-900 text-lg hover:text-red-600 transition-colors">
                     {contentData.contactEmail}
                 </a>
@@ -50,30 +104,71 @@ export default function Contact() {
                     <p className="text-gray-500">You can reach us anytime</p>
                 </div>
 
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                            <input type="text" placeholder="First name" className="w-full bg-transparent border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" />
+                            <input 
+                              type="text" 
+                              name="firstName"
+                              value={formData.firstName}
+                              onChange={handleChange}
+                              placeholder="First name" 
+                              className="w-full bg-transparent border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" 
+                            />
                         </div>
                         <div>
-                            <input type="text" placeholder="Last name" className="w-full bg-transparent border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" />
+                            <input 
+                              type="text" 
+                              name="lastName"
+                              value={formData.lastName}
+                              onChange={handleChange}
+                              placeholder="Last name" 
+                              className="w-full bg-transparent border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" 
+                            />
                         </div>
                     </div>
                     
                     <div>
-                        <input type="email" placeholder="Your email" className="w-full bg-transparent border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" />
+                        <input 
+                          type="email" 
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          placeholder="Your email" 
+                          className="w-full bg-transparent border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" 
+                          required
+                        />
                     </div>
                     
                     <div>
-                        <input type="tel" placeholder="Phone number" className="w-full bg-transparent border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" />
+                        <input 
+                          type="tel" 
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          placeholder="Phone number" 
+                          className="w-full bg-transparent border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" 
+                        />
                     </div>
 
                     <div>
-                        <textarea rows={4} placeholder="How can we help?" className="w-full bg-transparent border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all resize-none"></textarea>
+                        <textarea 
+                          rows={4} 
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          placeholder="How can we help?" 
+                          className="w-full bg-transparent border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all resize-none"
+                          required
+                        ></textarea>
                     </div>
                     
-                    <button type="submit" className="w-full bg-red-600 text-white py-4 rounded-xl font-bold hover:bg-red-700 transition-colors shadow-lg shadow-red-600/20">
-                        Submit
+                    <button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="w-full bg-red-600 text-white py-4 rounded-xl font-bold hover:bg-red-700 transition-colors shadow-lg shadow-red-600/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        {isSubmitting ? 'Sending...' : 'Submit'}
                     </button>
                     
                     <p className="text-center text-xs text-gray-500 mt-4">

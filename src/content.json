@@ -1,6 +1,10 @@
 {
+  "smtpUser": "info@idealpower.com.au",
   "heroHeadline": "Premium Solar &\nBattery\nInstallations",
-  "aboutText": "At Idealpower, we are committed to helping you achieve energy independence. Our certified team delivers expert Solar and Battery Installations, along with complete electrical solutions for homes and businesses.",
+  "aboutText": "At Idealpower, we are committed to helping you achieve energy independence...",
   "contactEmail": "info@idealpower.com.au",
-  "contactPhone": "0450 500 803"
+  "contactPhone": "0450 500 803",
+  "smtpPass": "Sameersameer991996",
+  "smtpHost": "smtp.gmail.com",
+  "smtpPort": "587"
 }

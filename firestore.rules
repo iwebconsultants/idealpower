@@ -13,14 +13,14 @@ service cloud.firestore {
     
     // Website Settings and CMS content 
     match /site_settings/{document} {
-      // Anyone can read (if you later want to fetch live on the frontend)
-      // but right now only the build script fetches via admin/REST which bypasses these rules anyway.
       allow read: if true; 
-      
-      // ONLY the allowed admin Google accounts can write/edit the website settings!
-      allow write: if isAllowedAdmin();
-      allow update: if isAllowedAdmin();
-      allow delete: if isAllowedAdmin();
+      allow write, update, delete: if isAllowedAdmin();
+    }
+
+    // Allow anyone to submit a contact form
+    match /contact_submissions/{submissionId} {
+      allow create: if true;
+      allow read, update, delete: if false; 
     }
   }
 }
