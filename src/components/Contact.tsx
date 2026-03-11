@@ -22,6 +22,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Contact form submitted", formData);
+    
     if (!formData.email || !formData.message) {
       toast.error("Please fill in your email and message.");
       return;
@@ -29,11 +30,13 @@ export default function Contact() {
 
     setIsSubmitting(true);
     try {
-      await addDoc(collection(db, 'contact_submissions'), {
+      console.log("Saving submission to Firestore...");
+      const docRef = await addDoc(collection(db, 'contact_submissions'), {
         ...formData,
         status: 'pending',
         createdAt: serverTimestamp()
       });
+      console.log("Submission saved with ID:", docRef.id);
       
       toast.success("Message sent! We'll get back to you soon.");
       setFormData({
@@ -44,8 +47,12 @@ export default function Contact() {
         message: ''
       });
     } catch (error: any) {
-      console.error("Error submitting form:", error);
-      toast.error("Failed to send message. Please try again later.");
+      console.error("CRITICAL FORM ERROR:", error);
+      // For absolute certainty in production debugging
+      if (typeof window !== 'undefined') {
+        // window.alert("Submission Error: " + error.message);
+      }
+      toast.error(`Error: ${error.message || 'Failed to send message'}`);
     } finally {
       setIsSubmitting(false);
     }
