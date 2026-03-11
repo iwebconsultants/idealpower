@@ -15,18 +15,13 @@ export default function Contact() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, placeholder, value } = e.target;
-    // Map placeholders to keys if name is missing
-    const key = name || (placeholder.toLowerCase().includes('first') ? 'firstName' : 
-                         placeholder.toLowerCase().includes('last') ? 'lastName' :
-                         placeholder.toLowerCase().includes('email') ? 'email' :
-                         placeholder.toLowerCase().includes('phone') ? 'phone' : 'message');
-    
-    setFormData(prev => ({ ...prev, [key]: value }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Contact form submitted", formData);
     if (!formData.email || !formData.message) {
       toast.error("Please fill in your email and message.");
       return;

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import { Toaster } from 'react-hot-toast';
 
 // Pages
 import Home from './pages/Home';
@@ -24,6 +25,7 @@ export default function App() {
     <HelmetProvider>
       <Router>
         <div className="font-sans text-slate-900 bg-white">
+          <Toaster position="top-right" />
           <Helmet>
             <title>Ideal Power - Expert Electrical Solutions in Sydney</title>
             <meta name="description" content="Ideal Power provides top-quality electrical services for homes and businesses in Sydney. Certified electricians, 24/7 emergency service, and affordable solutions." />

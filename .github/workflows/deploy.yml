@@ -31,7 +31,7 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_IDEALPOWER_SYDNEY }}
-          projectId: 1062273457899
+          projectId: idealpower-sydney
 
       - name: Deploy to Firebase Hosting Live
         if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
@@ -40,4 +40,4 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_IDEALPOWER_SYDNEY }}
           channelId: live
-          projectId: 1062273457899
+          projectId: idealpower-sydney
