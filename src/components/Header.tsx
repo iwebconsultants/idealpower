@@ -21,8 +21,8 @@ export default function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
             <div className="relative group">
-               <div className="h-16 w-16 bg-black rounded-full border-2 border-yellow-400 flex items-center justify-center overflow-hidden">
-                  <Zap className="h-8 w-8 text-red-600 fill-current" />
+               <div className="h-16 w-16 bg-white rounded-xl border-2 border-yellow-400 flex items-center justify-center overflow-hidden p-1 shadow-md shadow-white/10">
+                  <img src="/images/ideal-power-logo.png" alt="Ideal Power Logo" className="w-full h-full object-contain drop-shadow-sm" />
                </div>
             </div>
             

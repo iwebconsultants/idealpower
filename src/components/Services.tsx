@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const services = [
   {
@@ -49,14 +50,16 @@ export default function Services() {
               We specialize in Tier-1 Solar Data and Battery Installation, alongside complete Electrical Services for homes and businesses. Safe, Reliable, & Government Rebate Compliant.
             </p>
           </div>
-          <button className="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors shrink-0 whitespace-nowrap">
-            View All Services
-          </button>
+          <Link to="/services">
+            <button className="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors shrink-0 whitespace-nowrap">
+              View All Services
+            </button>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, index) => (
-                <div key={index} className={`group relative h-[300px] rounded-3xl overflow-hidden cursor-pointer ${service.orange ? 'bg-orange-500' : 'bg-gray-900'}`}>
+                <Link to="/services" key={index} className={`block group relative h-[300px] rounded-3xl overflow-hidden cursor-pointer ${service.orange ? 'bg-orange-500' : 'bg-gray-900'}`}>
                     {service.image && (
                         <img 
                             src={service.image} 
@@ -77,7 +80,7 @@ export default function Services() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Link>
             ))}
         </div>
       </div>

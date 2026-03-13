@@ -1,5 +1,6 @@
 import React from 'react';
 import { Play } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import contentData from '../content.json';
 
 export default function About() {
@@ -16,18 +17,26 @@ export default function About() {
               {contentData.aboutText}
             </p>
           </div>
-          <button className="bg-yellow-500 text-black px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors shrink-0">
-            More About Us
-          </button>
+          <Link to="/about" className="shrink-0">
+            <button className="w-full bg-yellow-500 text-black px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors">
+              More About Us
+            </button>
+          </Link>
         </div>
 
         {/* Video/Image Section */}
         <div className="relative w-full h-[500px] rounded-3xl overflow-hidden mb-0 bg-black">
-          <img 
-            src="/images/solar-batteries-install-hero.webp" 
-            alt="Solar Battery Installation" 
+          <video 
             className="w-full h-full object-cover opacity-80"
-          />
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            poster="/images/solar-batteries-install-hero.webp"
+          >
+            <source src="/images/electrician-in-field-resized.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
 
         {/* Stats Bar */}

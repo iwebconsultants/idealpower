@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const projects = [
   {
@@ -55,18 +56,22 @@ export default function Projects() {
                 <p className="text-gray-600 text-sm mb-8 leading-relaxed">
                   {project.description}
                 </p>
-                <button className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-red-600 transition-colors">
-                  View Project <ArrowRight className="w-4 h-4" />
-                </button>
+                <Link to="/projects">
+                  <button className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-red-600 transition-colors">
+                    View Project <ArrowRight className="w-4 h-4" />
+                  </button>
+                </Link>
               </div>
             </div>
           ))}
         </div>
 
         <div className="mt-16 text-center">
-          <button className="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors">
-            View All Projects
-          </button>
+          <Link to="/projects">
+            <button className="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors">
+              View All Projects
+            </button>
+          </Link>
         </div>
       </div>
     </section>

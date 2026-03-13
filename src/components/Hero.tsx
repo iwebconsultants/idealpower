@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
 import { ArrowRight, Star, CheckCircle2, Zap, ShieldCheck } from 'lucide-react';
 import contentData from '../content.json';
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -86,15 +87,26 @@ export default function Hero() {
                 {contentData.heroHeadline}
               </h1>
               
-              <motion.a 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="#services" 
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-full font-bold text-lg hover:bg-gray-100 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-              >
-                Discover Our Offerings
-              </motion.a>
-            </motion.div>
+              <div className="flex flex-wrap gap-4">
+                <Link to="/contact">
+                  <motion.button 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-flex items-center justify-center px-8 py-4 bg-red-600 text-white rounded-full font-bold text-lg hover:bg-red-700 transition-all shadow-lg shadow-red-600/30"
+                  >
+                    Get A Quote
+                  </motion.button>
+                </Link>
+                <Link to="/about">
+                  <motion.button 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-full font-bold text-lg hover:bg-gray-100 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                  >
+                    Discover Our Offerings
+                  </motion.button>
+                </Link>
+              </div>            </motion.div>
           </motion.div>
 
           {/* Layer 2: Center Image (The "Cutout" Effect) */}

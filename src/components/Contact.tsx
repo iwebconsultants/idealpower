@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import contentData from '../content.json';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 
 export default function Contact() {
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -28,11 +30,22 @@ export default function Contact() {
       return;
     }
 
+    if (!executeRecaptcha) {
+      console.warn("reCAPTCHA not yet available");
+      toast.error("reCAPTCHA is still loading, please try again in a moment.");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      console.log("Saving submission to Firestore...");
+      console.log("Executing reCAPTCHA...");
+      const recaptchaToken = await executeRecaptcha('contact_form');
+      console.log("reCAPTCHA token generated, length:", recaptchaToken?.length || 0);
+      
+      console.log("Saving submission to Firestore with token length:", recaptchaToken?.length || 0);
       const docRef = await addDoc(collection(db, 'contact_submissions'), {
         ...formData,
+        recaptchaToken,
         status: 'pending',
         createdAt: serverTimestamp()
       });

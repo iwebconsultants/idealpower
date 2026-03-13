@@ -12,9 +12,11 @@ export default function Footer() {
                 <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
                     We're here to fix your electrical problems quickly and safely.
                 </h2>
-                <button className="bg-orange-500 text-white px-8 py-3 rounded-full font-bold hover:bg-orange-600 transition-colors">
-                    {contentData.contactPhone}
-                </button>
+                <Link to="/contact">
+                  <button className="bg-orange-500 text-white px-8 py-3 rounded-full font-bold hover:bg-orange-600 transition-colors">
+                      {contentData.contactPhone}
+                  </button>
+                </Link>
             </div>
         </div>
 
