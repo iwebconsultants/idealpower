@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../firebase';
+import { auth, db, storage } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-import { LogOut, Save, Globe, Server, Settings, ShieldCheck } from 'lucide-react';
+import { LogOut, Save, Globe, Server, Settings, ShieldCheck, Upload, Trash2, Plus } from 'lucide-react';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'content' | 'gallery' | 'projects' | 'smtp'>('content');
   const [isSaving, setIsSaving] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const uploadImage = async (file: File, path: string): Promise<string> => {
+    const storageRef = ref(storage, `${path}/${Date.now()}-${file.name}`);
+    const snapshot = await uploadBytes(storageRef, file);
+    return await getDownloadURL(snapshot.ref);
+  };
 
   // Default structure
   const [formData, setFormData] = useState({
@@ -32,43 +40,21 @@ export default function AdminDashboard() {
       try {
         const docRef = doc(db, 'site_settings', 'main');
         const docSnap = await getDoc(docRef);
+        
         if (docSnap.exists()) {
           const data = docSnap.data();
-          // If galleryImages doesn't exist or is empty, provide the defaults
-          if (!data.galleryImages || data.galleryImages.length === 0) {
-            data.galleryImages = [
-              "/images/commercial-electrician-melbourne.jpeg",
-              "/images/electrical-contractor-team.png",
-              "/images/electrician-working-switchboard-cables.jpg",
-              "/images/professional-electrical-services.jpg",
-              "/images/residential-electrician-services.webp",
-              "/images/electrical-switchboard-installation.jpg"
-            ];
-          }
-          // If projects doesn't exist or is empty, provide the defaults
-          if (!data.projects || data.projects.length === 0) {
-            data.projects = [
-              {
-                title: "Electrical Security",
-                description: "With Years Of Experience And advanced electrical security solutions. From surge protection and backup systems to smart monitoring and access control, our expert team ensures your property stays safe, secure, and powered—day and night.",
-                image: "/images/professional-electrical-services.jpg",
-                reverse: false
-              },
-              {
-                title: "Electrical Diagnostic",
-                description: "Our electrical diagnostic services identify issues quickly and accurately to keep your systems running safely and efficiently. Using advanced tools and expert insight, we troubleshoot problems and provide clear, effective solutions you can trust.",
-                image: "/images/electrician-fixing-switchboard.jpg",
-                reverse: true
-              },
-              {
-                title: "Electrical Installation",
-                description: "We provide safe, efficient electrical installation services for homes, offices, and commercial spaces. From lighting and wiring to full system setups, our certified electricians ensure every installation meets the highest standards for quality and safety.",
-                image: "/images/electrical-switchboard-installation.jpg",
-                reverse: false
-              }
-            ];
-          }
-          setFormData(prev => ({ ...prev, ...data }));
+          
+          // Ensure arrays exist to avoid null map errors
+          if (!data.galleryImages) data.galleryImages = [];
+          if (!data.projects) data.projects = [];
+          
+          setFormData(prev => ({ 
+            ...prev, 
+            ...data 
+          }));
+        } else {
+            console.log("No existing settings document found. Initializing with defaults.");
+            // We keep the initial state defaults from useState
         }
       } catch (err) {
         console.error("Error loading data:", err);
@@ -264,42 +250,87 @@ export default function AdminDashboard() {
                     <div className="space-y-6">
                         <div className="flex justify-between items-center mb-4">
                             <h3 className="text-lg font-bold">Gallery Images</h3>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    const url = prompt("Enter image URL:");
-                                    if (url) {
-                                        setFormData(prev => ({
-                                            ...prev,
-                                            galleryImages: [...(prev.galleryImages || []), url]
-                                        }));
-                                    }
-                                }}
-                                className="bg-black text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-800 transition-colors"
-                            >
-                                Add Image
-                            </button>
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            {(formData.galleryImages || []).map((url, index) => (
-                                <div key={index} className="relative group aspect-video rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
-                                    <img src={url} alt={`Gallery ${index}`} className="w-full h-full object-cover" />
-                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                        <button
-                                            type="button"
-                                            onClick={() => {
+                            <div className="flex gap-2">
+                                <label className="cursor-pointer bg-black text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-800 transition-colors flex items-center gap-2">
+                                    <Upload className="w-4 h-4" />
+                                    Upload from Computer
+                                    <input 
+                                        type="file" 
+                                        className="hidden" 
+                                        accept="image/*"
+                                        onChange={async (e) => {
+                                            const file = e.target.files?.[0];
+                                            if (!file) return;
+                                            
+                                            setIsUploading(true);
+                                            try {
+                                                const url = await uploadImage(file, 'gallery');
                                                 setFormData(prev => ({
                                                     ...prev,
-                                                    galleryImages: prev.galleryImages.filter((_, i) => i !== index)
+                                                    galleryImages: [...(prev.galleryImages || []), url]
                                                 }));
-                                            }}
-                                            className="bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-700"
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
+                                                toast.success("Image uploaded!");
+                                            } catch (err) {
+                                                console.error(err);
+                                                toast.error("Upload failed");
+                                            } finally {
+                                                setIsUploading(false);
+                                            }
+                                        }}
+                                    />
+                                </label>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const url = prompt("Enter image URL:");
+                                        if (url) {
+                                            setFormData(prev => ({
+                                                ...prev,
+                                                galleryImages: [...(prev.galleryImages || []), url]
+                                            }));
+                                        }
+                                    }}
+                                    className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-300 transition-colors"
+                                >
+                                    Add via URL
+                                </button>
+                            </div>
+                        </div>
+                        {isUploading && (
+                            <div className="flex items-center gap-3 text-sm text-yellow-600 font-medium bg-yellow-50 p-3 rounded-xl border border-yellow-100 animate-pulse">
+                                <Upload className="w-4 h-4 animate-bounce" />
+                                Uploading image to storage...
+                            </div>
+                        )}
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            {(!formData.galleryImages || formData.galleryImages.length === 0) ? (
+                                <div className="col-span-full py-12 text-center border-2 border-dashed border-gray-100 rounded-3xl">
+                                    <Globe className="w-12 h-12 text-gray-200 mx-auto mb-3" />
+                                    <p className="text-gray-400 font-medium">No images in your gallery yet.</p>
+                                    <p className="text-xs text-gray-300 mt-1">Upload an image or add a URL to get started.</p>
                                 </div>
-                            ))}
+                            ) : (
+                                formData.galleryImages.map((url, index) => (
+                                    <div key={index} className="relative group aspect-video rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
+                                        <img src={url} alt={`Gallery ${index}`} className="w-full h-full object-cover" />
+                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setFormData(prev => ({
+                                                        ...prev,
+                                                        galleryImages: prev.galleryImages.filter((_, i) => i !== index)
+                                                    }));
+                                                }}
+                                                className="bg-red-600 text-white p-2 rounded-lg hover:bg-red-700 transition-colors"
+                                                title="Remove Image"
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </div>
                 )}
@@ -314,111 +345,164 @@ export default function AdminDashboard() {
                             <button
                                 type="button"
                                 onClick={() => {
-                                    setFormData(prev => ({
-                                        ...prev,
-                                        projects: [
-                                            ...(prev.projects || []),
-                                            { 
-                                                title: "New Project", 
-                                                description: "Describe the project here...", 
-                                                image: "/images/professional-electrical-services.jpg",
-                                                reverse: prev.projects?.length % 2 === 1
-                                            }
-                                        ]
-                                    }));
+                                    setFormData(prev => {
+                                        const currentProjects = prev.projects || [];
+                                        return {
+                                            ...prev,
+                                            projects: [
+                                                ...currentProjects,
+                                                { 
+                                                    title: "New Project", 
+                                                    description: "Describe the project here...", 
+                                                    image: "/images/professional-electrical-services.jpg",
+                                                    reverse: currentProjects.length % 2 === 1
+                                                }
+                                            ]
+                                        };
+                                    });
+                                    toast.success("New project added to list!");
                                 }}
-                                className="bg-black text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-800 transition-colors"
+                                className="bg-black text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-800 transition-colors flex items-center gap-2"
                             >
+                                <Plus className="w-4 h-4" />
                                 Add Project
                             </button>
                         </div>
 
                         <div className="space-y-6">
-                            {(formData.projects || []).map((project, index) => (
-                                <div key={index} className="p-6 rounded-2xl border border-gray-100 bg-gray-50 space-y-4">
-                                    <div className="flex justify-between items-start">
-                                        <h4 className="font-bold text-gray-900">Project #{index + 1}</h4>
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setFormData(prev => ({
-                                                    ...prev,
-                                                    projects: prev.projects.filter((_, i) => i !== index)
-                                                }));
-                                            }}
-                                            className="text-red-600 hover:text-red-700 text-xs font-bold"
-                                        >
-                                            Delete Project
-                                        </button>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="space-y-4">
-                                            <div>
-                                                <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Title</label>
-                                                <input 
-                                                    type="text"
-                                                    value={project.title}
-                                                    onChange={(e) => {
-                                                        const newProjects = [...formData.projects];
-                                                        newProjects[index].title = e.target.value;
-                                                        setFormData(prev => ({ ...prev, projects: newProjects }));
-                                                    }}
-                                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-yellow-500 outline-none transition-all text-sm"
-                                                />
-                                            </div>
-                                            <div>
-                                                <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Description</label>
-                                                <textarea 
-                                                    value={project.description}
-                                                    rows={3}
-                                                    onChange={(e) => {
-                                                        const newProjects = [...formData.projects];
-                                                        newProjects[index].description = e.target.value;
-                                                        setFormData(prev => ({ ...prev, projects: newProjects }));
-                                                    }}
-                                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-yellow-500 outline-none transition-all text-sm"
-                                                />
-                                            </div>
+                            {(!formData.projects || formData.projects.length === 0) ? (
+                                <div className="py-20 text-center border-2 border-dashed border-gray-100 rounded-3xl bg-gray-50/50">
+                                    <Globe className="w-12 h-12 text-gray-200 mx-auto mb-3" />
+                                    <p className="text-gray-400 font-medium">No projects listed yet.</p>
+                                    <p className="text-xs text-gray-300 mt-1">Click "Add Project" to start building your portfolio.</p>
+                                </div>
+                            ) : (
+                                formData.projects.map((project, index) => (
+                                    <div key={index} className="p-6 rounded-2xl border border-gray-100 bg-gray-50 space-y-4">
+                                        <div className="flex justify-between items-start">
+                                            <h4 className="font-bold text-gray-900">Project #{index + 1}</h4>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setFormData(prev => ({
+                                                        ...prev,
+                                                        projects: prev.projects.filter((_, i) => i !== index)
+                                                    }));
+                                                }}
+                                                className="text-red-600 hover:text-red-700 text-xs font-bold"
+                                            >
+                                                Delete Project
+                                            </button>
                                         </div>
 
-                                        <div className="space-y-4">
-                                            <div>
-                                                <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Image URL</label>
-                                                <div className="flex gap-2">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Title</label>
                                                     <input 
                                                         type="text"
-                                                        value={project.image}
+                                                        value={project.title}
                                                         onChange={(e) => {
-                                                            const newProjects = [...formData.projects];
-                                                            newProjects[index].image = e.target.value;
-                                                            setFormData(prev => ({ ...prev, projects: newProjects }));
+                                                            const val = e.target.value;
+                                                            setFormData(prev => {
+                                                                const newProjects = [...prev.projects];
+                                                                newProjects[index] = { ...newProjects[index], title: val };
+                                                                return { ...prev, projects: newProjects };
+                                                            });
                                                         }}
-                                                        className="flex-1 px-4 py-2 rounded-lg border border-gray-200 focus:border-yellow-500 outline-none transition-all text-sm"
+                                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-yellow-500 outline-none transition-all text-sm"
                                                     />
-                                                    <button 
-                                                        type="button"
-                                                        onClick={() => {
-                                                            const url = prompt("Paste image URL:", project.image);
-                                                            if (url) {
-                                                                const newProjects = [...formData.projects];
-                                                                newProjects[index].image = url;
-                                                                setFormData(prev => ({ ...prev, projects: newProjects }));
-                                                            }
+                                                </div>
+                                                <div>
+                                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Description</label>
+                                                    <textarea 
+                                                        value={project.description}
+                                                        rows={3}
+                                                        onChange={(e) => {
+                                                            const val = e.target.value;
+                                                            setFormData(prev => {
+                                                                const newProjects = [...prev.projects];
+                                                                newProjects[index] = { ...newProjects[index], description: val };
+                                                                return { ...prev, projects: newProjects };
+                                                            });
                                                         }}
-                                                        className="bg-gray-200 px-3 py-2 rounded-lg text-xs font-bold hover:bg-gray-300"
-                                                    >
-                                                        Change
-                                                    </button>
+                                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-yellow-500 outline-none transition-all text-sm"
+                                                    />
                                                 </div>
                                             </div>
-                                            <div className="aspect-video rounded-xl overflow-hidden border border-gray-200">
-                                                <img src={project.image} alt="Preview" className="w-full h-full object-cover" />
+
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Image URL</label>
+                                                    <div className="flex gap-2">
+                                                        <input 
+                                                            type="text"
+                                                            value={project.image}
+                                                            onChange={(e) => {
+                                                                const val = e.target.value;
+                                                                setFormData(prev => {
+                                                                    const newProjects = [...prev.projects];
+                                                                    newProjects[index] = { ...newProjects[index], image: val };
+                                                                    return { ...prev, projects: newProjects };
+                                                                });
+                                                            }}
+                                                            className="flex-1 px-4 py-2 rounded-lg border border-gray-200 focus:border-yellow-500 outline-none transition-all text-sm"
+                                                        />
+                                                        <div className="flex gap-1">
+                                                            <label className="cursor-pointer bg-yellow-500 text-black px-3 py-2 rounded-lg text-xs font-bold hover:bg-yellow-400 transition-colors flex items-center gap-1">
+                                                                <Upload className="w-3 h-3" />
+                                                                Upload
+                                                                <input 
+                                                                    type="file" 
+                                                                    className="hidden" 
+                                                                    accept="image/*"
+                                                                    onChange={async (e) => {
+                                                                        const file = e.target.files?.[0];
+                                                                        if (!file) return;
+                                                                        
+                                                                        const uploadToast = toast.loading("Uploading project image...");
+                                                                        try {
+                                                                            const url = await uploadImage(file, 'projects');
+                                                                            setFormData(prev => {
+                                                                                const newProjects = [...prev.projects];
+                                                                                newProjects[index] = { ...newProjects[index], image: url };
+                                                                                return { ...prev, projects: newProjects };
+                                                                            });
+                                                                            toast.success("Project image updated!", { id: uploadToast });
+                                                                        } catch (err) {
+                                                                            console.error(err);
+                                                                            toast.error("Upload failed", { id: uploadToast });
+                                                                        }
+                                                                    }}
+                                                                />
+                                                            </label>
+                                                            <button 
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    const url = prompt("Paste image URL:", project.image);
+                                                                    if (url) {
+                                                                        setFormData(prev => {
+                                                                            const newProjects = [...prev.projects];
+                                                                            newProjects[index] = { ...newProjects[index], image: url };
+                                                                            return { ...prev, projects: newProjects };
+                                                                        });
+                                                                    }
+                                                                }}
+                                                                className="bg-gray-200 px-3 py-2 rounded-lg text-xs font-bold hover:bg-gray-300"
+                                                            >
+                                                                URL
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="aspect-video rounded-xl overflow-hidden border border-gray-200">
+                                                    <img src={project.image} alt="Preview" className="w-full h-full object-cover" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))
+                            )}
                         </div>
                     </div>
                 )}
