@@ -1,16 +1,25 @@
-import React from 'react';
-import { motion } from 'motion/react';
-
-const images = [
-  "/images/commercial-electrician-melbourne.jpeg",
-  "/images/electrical-contractor-team.png",
-  "/images/electrician-working-switchboard-cables.jpg",
-  "/images/professional-electrical-services.jpg",
-  "/images/residential-electrician-services.webp",
-  "/images/electrical-switchboard-installation.jpg"
-];
+import { db } from '../firebase';
+import { doc, onSnapshot } from 'firebase/firestore';
 
 export default function Gallery() {
+  const [images, setImages] = React.useState<string[]>([
+    "/images/commercial-electrician-melbourne.jpeg",
+    "/images/electrical-contractor-team.png",
+    "/images/electrician-working-switchboard-cables.jpg",
+    "/images/professional-electrical-services.jpg",
+    "/images/residential-electrician-services.webp",
+    "/images/electrical-switchboard-installation.jpg"
+  ]);
+
+  React.useEffect(() => {
+    const unsub = onSnapshot(doc(db, 'site_settings', 'main'), (doc) => {
+      if (doc.exists() && doc.data().galleryImages) {
+        setImages(doc.data().galleryImages);
+      }
+    });
+    return () => unsub();
+  }, []);
+
   return (
     <section id="gallery" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

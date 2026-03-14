@@ -27,10 +27,10 @@ export default function Footer() {
                     Look no further, because Ideal Power is here to illuminate your world with excellence in electrical services.
                 </p>
                 <div className="flex gap-4">
-                    <a href="#" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-colors">
+                    <a href="https://www.facebook.com/people/Ideal-Power-PTY-LTD/100089451614459/?mibextid=wwXIfr&rdid=GyRcEKwvu5LxDtst&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1NCyrLKSYM%2F%3Fmibextid%3DwwXIfr%26ref%3D1" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-colors">
                         <Facebook className="w-4 h-4" />
                     </a>
-                    <a href="#" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-colors">
+                    <a href="https://www.instagram.com/powerideal?igsh=MXFiYjdqd2UwOGZmMg%3D%3D" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-colors">
                         <Instagram className="w-4 h-4" />
                     </a>
                 </div>

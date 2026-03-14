@@ -5,7 +5,6 @@ import { auth } from '../firebase';
 // ONLY these emails will be allowed into the Admin Dashboard
 const ALLOWED_ADMIN_EMAILS = [
   'info@idealpower.com.au', // Add the actual admin emails here
-  'azam@anigravity.com' // Replace with your actual email
 ];
 
 export function useAdminAuth() {

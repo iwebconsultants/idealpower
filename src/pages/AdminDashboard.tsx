@@ -8,7 +8,7 @@ import { LogOut, Save, Globe, Server, Settings, ShieldCheck } from 'lucide-react
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'content' | 'smtp'>('content');
+  const [activeTab, setActiveTab] = useState<'content' | 'gallery' | 'smtp'>('content');
   const [isSaving, setIsSaving] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
 
@@ -21,7 +21,8 @@ export default function AdminDashboard() {
     smtpUser: "",
     smtpPass: "",
     contactEmail: "info@idealpower.com.au",
-    contactPhone: "0450 500 803"
+    contactPhone: "0450 500 803",
+    galleryImages: [] as string[]
   });
 
   // Fetch current data on load
@@ -107,6 +108,14 @@ export default function AdminDashboard() {
           </button>
           
           <button 
+            onClick={() => setActiveTab('gallery')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'gallery' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-900'}`}
+          >
+            <Globe className="w-4 h-4" />
+            Gallery Images
+          </button>
+          
+          <button 
             onClick={() => setActiveTab('smtp')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'smtp' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-900'}`}
           >
@@ -148,7 +157,7 @@ export default function AdminDashboard() {
             <header className="mb-8 flex justify-between items-center">
                 <div>
                     <h2 className="text-2xl font-bold text-gray-900">
-                        {activeTab === 'content' ? 'Website Content' : 'SMTP Configuration'}
+                        {activeTab === 'content' ? 'Website Content' : activeTab === 'gallery' ? 'Gallery Images' : 'SMTP Configuration'}
                     </h2>
                     <p className="text-gray-500 text-sm mt-1">
                         Edit your site details. Click Save to store in database, and Publish to update the live website.
@@ -203,6 +212,50 @@ export default function AdminDashboard() {
                                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/20 outline-none transition-all"
                                 />
                             </div>
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'gallery' && (
+                    <div className="space-y-6">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="text-lg font-bold">Gallery Images</h3>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const url = prompt("Enter image URL:");
+                                    if (url) {
+                                        setFormData(prev => ({
+                                            ...prev,
+                                            galleryImages: [...(prev.galleryImages || []), url]
+                                        }));
+                                    }
+                                }}
+                                className="bg-black text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-800 transition-colors"
+                            >
+                                Add Image
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            {(formData.galleryImages || []).map((url, index) => (
+                                <div key={index} className="relative group aspect-video rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
+                                    <img src={url} alt={`Gallery ${index}`} className="w-full h-full object-cover" />
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    galleryImages: prev.galleryImages.filter((_, i) => i !== index)
+                                                }));
+                                            }}
+                                            className="bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-700"
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 )}
