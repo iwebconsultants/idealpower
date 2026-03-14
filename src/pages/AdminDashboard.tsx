@@ -32,7 +32,19 @@ export default function AdminDashboard() {
         const docRef = doc(db, 'site_settings', 'main');
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setFormData(prev => ({ ...prev, ...docSnap.data() }));
+          const data = docSnap.data();
+          // If galleryImages doesn't exist or is empty, provide the defaults
+          if (!data.galleryImages || data.galleryImages.length === 0) {
+            data.galleryImages = [
+              "/images/commercial-electrician-melbourne.jpeg",
+              "/images/electrical-contractor-team.png",
+              "/images/electrician-working-switchboard-cables.jpg",
+              "/images/professional-electrical-services.jpg",
+              "/images/residential-electrician-services.webp",
+              "/images/electrical-switchboard-installation.jpg"
+            ];
+          }
+          setFormData(prev => ({ ...prev, ...data }));
         }
       } catch (err) {
         console.error("Error loading data:", err);
