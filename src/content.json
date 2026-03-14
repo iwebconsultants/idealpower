@@ -1,10 +1,129 @@
 {
+  "galleryImages": {
+    "values": [
+      {
+        "stringValue": "/images/commercial-electrician-melbourne.jpeg"
+      },
+      {
+        "stringValue": "/images/electrical-contractor-team.png"
+      },
+      {
+        "stringValue": "/images/electrician-working-switchboard-cables.jpg"
+      },
+      {
+        "stringValue": "/images/professional-electrical-services.jpg"
+      },
+      {
+        "stringValue": "/images/residential-electrician-services.webp"
+      },
+      {
+        "stringValue": "/images/electrical-switchboard-installation.jpg"
+      },
+      {
+        "stringValue": "https://firebasestorage.googleapis.com/v0/b/idealpower-sydney.firebasestorage.app/o/gallery%2F1773492915906-solar-batteries-install-hero.webp?alt=media&token=de25dff1-6387-42ed-b7bc-a8fc832f794c"
+      }
+    ]
+  },
   "contactEmail": "info@idealpower.com.au",
-  "smtpUser": "info@idealpower.com.au",
-  "smtpHost": "smtp.gmail.com",
   "aboutText": "At Idealpower, we are committed to helping you achieve energy independence...",
-  "smtpPass": "Sameersameer991996",
   "smtpPort": "587",
+  "smtpUser": "info@idealpower.com.au",
+  "smtpPass": "Sameersameer991996",
   "heroHeadline": "Premium Solar &\nBattery\nInstallations",
+  "projects": {
+    "values": [
+      {
+        "mapValue": {
+          "fields": {
+            "reverse": {
+              "booleanValue": false
+            },
+            "description": {
+              "stringValue": "With Years Of Experience And advanced electrical security solutions. From surge protection and backup systems to smart monitoring and access control, our expert team ensures your property stays safe, secure, and powered—day and night."
+            },
+            "title": {
+              "stringValue": "Electrical Security"
+            },
+            "image": {
+              "stringValue": "/images/professional-electrical-services.jpg"
+            }
+          }
+        }
+      },
+      {
+        "mapValue": {
+          "fields": {
+            "title": {
+              "stringValue": "Electrical Diagnostic"
+            },
+            "image": {
+              "stringValue": "/images/electrician-fixing-switchboard.jpg"
+            },
+            "reverse": {
+              "booleanValue": true
+            },
+            "description": {
+              "stringValue": "Our electrical diagnostic services identify issues quickly and accurately to keep your systems running safely and efficiently. Using advanced tools and expert insight, we troubleshoot problems and provide clear, effective solutions you can trust."
+            }
+          }
+        }
+      },
+      {
+        "mapValue": {
+          "fields": {
+            "description": {
+              "stringValue": "We provide safe, efficient electrical installation services for homes, offices, and commercial spaces. From lighting and wiring to full system setups, our certified electricians ensure every installation meets the highest standards for quality and safety."
+            },
+            "reverse": {
+              "booleanValue": false
+            },
+            "image": {
+              "stringValue": "/images/electrical-switchboard-installation.jpg"
+            },
+            "title": {
+              "stringValue": "Electrical Installation"
+            }
+          }
+        }
+      },
+      {
+        "mapValue": {
+          "fields": {
+            "description": {
+              "stringValue": "Describe the project here..."
+            },
+            "reverse": {
+              "booleanValue": true
+            },
+            "image": {
+              "stringValue": "/images/professional-electrical-services.jpg"
+            },
+            "title": {
+              "stringValue": "New Project"
+            }
+          }
+        }
+      },
+      {
+        "mapValue": {
+          "fields": {
+            "reverse": {
+              "booleanValue": false
+            },
+            "description": {
+              "stringValue": "Describe the project here..."
+            },
+            "title": {
+              "stringValue": "New Project"
+            },
+            "image": {
+              "stringValue": "/images/professional-electrical-services.jpg"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "smtpHost": "smtp.gmail.com",
   "contactPhone": "0450 500 803"
 }

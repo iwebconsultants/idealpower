@@ -49,9 +49,7 @@ jobs:
 
       - name: Deploy to Firebase Hosting Live
         if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_IDEALPOWER_SYDNEY }}
-          channelId: live
-          projectId: idealpower-sydney
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase-key.json
+        run: |
+          npx firebase-tools deploy --only hosting --project idealpower-sydney --non-interactive
