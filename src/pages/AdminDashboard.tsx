@@ -199,8 +199,9 @@ export default function AdminDashboard() {
                 {activeTab === 'content' && (
                     <div className="space-y-6">
                         <div>
-                            <label className="block text-sm font-bold text-gray-700 mb-2">Hero Headline</label>
+                            <label htmlFor="heroHeadline" className="block text-sm font-bold text-gray-700 mb-2">Hero Headline</label>
                             <textarea 
+                                id="heroHeadline"
                                 name="heroHeadline"
                                 value={formData.heroHeadline}
                                 onChange={handleChange}
@@ -211,8 +212,9 @@ export default function AdminDashboard() {
                         </div>
                         
                         <div>
-                            <label className="block text-sm font-bold text-gray-700 mb-2">About Us Text</label>
+                            <label htmlFor="aboutText" className="block text-sm font-bold text-gray-700 mb-2">About Us Text</label>
                             <textarea 
+                                id="aboutText"
                                 name="aboutText"
                                 value={formData.aboutText}
                                 onChange={handleChange}
@@ -223,8 +225,9 @@ export default function AdminDashboard() {
 
                         <div className="grid grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Contact Email</label>
+                                <label htmlFor="contactEmail" className="block text-sm font-bold text-gray-700 mb-2">Contact Email</label>
                                 <input 
+                                    id="contactEmail"
                                     type="email"
                                     name="contactEmail"
                                     value={formData.contactEmail}
@@ -233,8 +236,9 @@ export default function AdminDashboard() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Contact Phone</label>
+                                <label htmlFor="contactPhone" className="block text-sm font-bold text-gray-700 mb-2">Contact Phone</label>
                                 <input 
+                                    id="contactPhone"
                                     type="text"
                                     name="contactPhone"
                                     value={formData.contactPhone}
@@ -398,8 +402,9 @@ export default function AdminDashboard() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div className="space-y-4">
                                                 <div>
-                                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Title</label>
+                                                    <label htmlFor={`project-title-${index}`} className="block text-xs font-bold text-gray-500 uppercase mb-1">Title</label>
                                                     <input 
+                                                        id={`project-title-${index}`}
                                                         type="text"
                                                         value={project.title}
                                                         onChange={(e) => {
@@ -414,8 +419,9 @@ export default function AdminDashboard() {
                                                     />
                                                 </div>
                                                 <div>
-                                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Description</label>
+                                                    <label htmlFor={`project-desc-${index}`} className="block text-xs font-bold text-gray-500 uppercase mb-1">Description</label>
                                                     <textarea 
+                                                        id={`project-desc-${index}`}
                                                         value={project.description}
                                                         rows={3}
                                                         onChange={(e) => {
@@ -433,9 +439,10 @@ export default function AdminDashboard() {
 
                                             <div className="space-y-4">
                                                 <div>
-                                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Image URL</label>
+                                                    <label htmlFor={`project-image-${index}`} className="block text-xs font-bold text-gray-500 uppercase mb-1">Image URL</label>
                                                     <div className="flex gap-2">
                                                         <input 
+                                                            id={`project-image-${index}`}
                                                             type="text"
                                                             value={project.image}
                                                             onChange={(e) => {
@@ -453,6 +460,7 @@ export default function AdminDashboard() {
                                                                 <Upload className="w-3 h-3" />
                                                                 Upload
                                                                 <input 
+                                                                    id={`project-file-${index}`}
                                                                     type="file" 
                                                                     className="hidden" 
                                                                     accept="image/*"
@@ -516,8 +524,9 @@ export default function AdminDashboard() {
 
                         <div className="grid grid-cols-3 gap-6">
                             <div className="col-span-2">
-                                <label className="block text-sm font-bold text-gray-700 mb-2">SMTP Host</label>
+                                <label htmlFor="smtpHost" className="block text-sm font-bold text-gray-700 mb-2">SMTP Host</label>
                                 <input 
+                                    id="smtpHost"
                                     type="text"
                                     name="smtpHost"
                                     placeholder="e.g. smtp.gmail.com"
@@ -527,8 +536,9 @@ export default function AdminDashboard() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Port</label>
+                                <label htmlFor="smtpPort" className="block text-sm font-bold text-gray-700 mb-2">Port</label>
                                 <input 
+                                    id="smtpPort"
                                     type="text"
                                     name="smtpPort"
                                     value={formData.smtpPort}
@@ -540,8 +550,9 @@ export default function AdminDashboard() {
 
                         <div className="grid grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">SMTP User (Email)</label>
+                                <label htmlFor="smtpUser" className="block text-sm font-bold text-gray-700 mb-2">SMTP User (Email)</label>
                                 <input 
+                                    id="smtpUser"
                                     type="text"
                                     name="smtpUser"
                                     value={formData.smtpUser}
@@ -550,8 +561,9 @@ export default function AdminDashboard() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">SMTP Password / App Password</label>
+                                <label htmlFor="smtpPass" className="block text-sm font-bold text-gray-700 mb-2">SMTP Password / App Password</label>
                                 <input 
+                                    id="smtpPass"
                                     type="password"
                                     name="smtpPass"
                                     placeholder="••••••••••••"
