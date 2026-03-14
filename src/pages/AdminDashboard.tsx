@@ -8,7 +8,7 @@ import { LogOut, Save, Globe, Server, Settings, ShieldCheck } from 'lucide-react
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'content' | 'gallery' | 'smtp'>('content');
+  const [activeTab, setActiveTab] = useState<'content' | 'gallery' | 'projects' | 'smtp'>('content');
   const [isSaving, setIsSaving] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
 
@@ -22,7 +22,8 @@ export default function AdminDashboard() {
     smtpPass: "",
     contactEmail: "info@idealpower.com.au",
     contactPhone: "0450 500 803",
-    galleryImages: [] as string[]
+    galleryImages: [] as string[],
+    projects: [] as {title: string, description: string, image: string, reverse: boolean}[]
   });
 
   // Fetch current data on load
@@ -42,6 +43,29 @@ export default function AdminDashboard() {
               "/images/professional-electrical-services.jpg",
               "/images/residential-electrician-services.webp",
               "/images/electrical-switchboard-installation.jpg"
+            ];
+          }
+          // If projects doesn't exist or is empty, provide the defaults
+          if (!data.projects || data.projects.length === 0) {
+            data.projects = [
+              {
+                title: "Electrical Security",
+                description: "With Years Of Experience And advanced electrical security solutions. From surge protection and backup systems to smart monitoring and access control, our expert team ensures your property stays safe, secure, and powered—day and night.",
+                image: "/images/professional-electrical-services.jpg",
+                reverse: false
+              },
+              {
+                title: "Electrical Diagnostic",
+                description: "Our electrical diagnostic services identify issues quickly and accurately to keep your systems running safely and efficiently. Using advanced tools and expert insight, we troubleshoot problems and provide clear, effective solutions you can trust.",
+                image: "/images/electrician-fixing-switchboard.jpg",
+                reverse: true
+              },
+              {
+                title: "Electrical Installation",
+                description: "We provide safe, efficient electrical installation services for homes, offices, and commercial spaces. From lighting and wiring to full system setups, our certified electricians ensure every installation meets the highest standards for quality and safety.",
+                image: "/images/electrical-switchboard-installation.jpg",
+                reverse: false
+              }
             ];
           }
           setFormData(prev => ({ ...prev, ...data }));
@@ -120,6 +144,14 @@ export default function AdminDashboard() {
           </button>
           
           <button 
+            onClick={() => setActiveTab('projects')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'projects' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-900'}`}
+          >
+            <Globe className="w-4 h-4" />
+            Projects
+          </button>
+          
+          <button 
             onClick={() => setActiveTab('gallery')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeTab === 'gallery' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-900'}`}
           >
@@ -169,7 +201,7 @@ export default function AdminDashboard() {
             <header className="mb-8 flex justify-between items-center">
                 <div>
                     <h2 className="text-2xl font-bold text-gray-900">
-                        {activeTab === 'content' ? 'Website Content' : activeTab === 'gallery' ? 'Gallery Images' : 'SMTP Configuration'}
+                        {activeTab === 'content' ? 'Website Content' : activeTab === 'gallery' ? 'Gallery Images' : activeTab === 'projects' ? 'Project Management' : 'SMTP Configuration'}
                     </h2>
                     <p className="text-gray-500 text-sm mt-1">
                         Edit your site details. Click Save to store in database, and Publish to update the live website.
@@ -265,6 +297,125 @@ export default function AdminDashboard() {
                                         >
                                             Remove
                                         </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'projects' && (
+                    <div className="space-y-8">
+                        <div className="flex justify-between items-center mb-4">
+                            <div>
+                                <h3 className="text-lg font-bold">Manage Projects</h3>
+                                <p className="text-sm text-gray-500">Add, edit or remove projects displayed on the homepage.</p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        projects: [
+                                            ...(prev.projects || []),
+                                            { 
+                                                title: "New Project", 
+                                                description: "Describe the project here...", 
+                                                image: "/images/professional-electrical-services.jpg",
+                                                reverse: prev.projects?.length % 2 === 1
+                                            }
+                                        ]
+                                    }));
+                                }}
+                                className="bg-black text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-800 transition-colors"
+                            >
+                                Add Project
+                            </button>
+                        </div>
+
+                        <div className="space-y-6">
+                            {(formData.projects || []).map((project, index) => (
+                                <div key={index} className="p-6 rounded-2xl border border-gray-100 bg-gray-50 space-y-4">
+                                    <div className="flex justify-between items-start">
+                                        <h4 className="font-bold text-gray-900">Project #{index + 1}</h4>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    projects: prev.projects.filter((_, i) => i !== index)
+                                                }));
+                                            }}
+                                            className="text-red-600 hover:text-red-700 text-xs font-bold"
+                                        >
+                                            Delete Project
+                                        </button>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-4">
+                                            <div>
+                                                <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Title</label>
+                                                <input 
+                                                    type="text"
+                                                    value={project.title}
+                                                    onChange={(e) => {
+                                                        const newProjects = [...formData.projects];
+                                                        newProjects[index].title = e.target.value;
+                                                        setFormData(prev => ({ ...prev, projects: newProjects }));
+                                                    }}
+                                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-yellow-500 outline-none transition-all text-sm"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Description</label>
+                                                <textarea 
+                                                    value={project.description}
+                                                    rows={3}
+                                                    onChange={(e) => {
+                                                        const newProjects = [...formData.projects];
+                                                        newProjects[index].description = e.target.value;
+                                                        setFormData(prev => ({ ...prev, projects: newProjects }));
+                                                    }}
+                                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-yellow-500 outline-none transition-all text-sm"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <div>
+                                                <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Image URL</label>
+                                                <div className="flex gap-2">
+                                                    <input 
+                                                        type="text"
+                                                        value={project.image}
+                                                        onChange={(e) => {
+                                                            const newProjects = [...formData.projects];
+                                                            newProjects[index].image = e.target.value;
+                                                            setFormData(prev => ({ ...prev, projects: newProjects }));
+                                                        }}
+                                                        className="flex-1 px-4 py-2 rounded-lg border border-gray-200 focus:border-yellow-500 outline-none transition-all text-sm"
+                                                    />
+                                                    <button 
+                                                        type="button"
+                                                        onClick={() => {
+                                                            const url = prompt("Paste image URL:", project.image);
+                                                            if (url) {
+                                                                const newProjects = [...formData.projects];
+                                                                newProjects[index].image = url;
+                                                                setFormData(prev => ({ ...prev, projects: newProjects }));
+                                                            }
+                                                        }}
+                                                        className="bg-gray-200 px-3 py-2 rounded-lg text-xs font-bold hover:bg-gray-300"
+                                                    >
+                                                        Change
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div className="aspect-video rounded-xl overflow-hidden border border-gray-200">
+                                                <img src={project.image} alt="Preview" className="w-full h-full object-cover" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             ))}

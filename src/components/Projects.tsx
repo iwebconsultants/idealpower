@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../firebase';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const projects = [
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  reverse: boolean;
+}
+
+const defaultProjects: Project[] = [
   {
     title: "Electrical Security",
     description: "With Years Of Experience And advanced electrical security solutions. From surge protection and backup systems to smart monitoring and access control, our expert team ensures your property stays safe, secure, and powered—day and night.",
@@ -24,6 +33,19 @@ const projects = [
 ];
 
 export default function Projects() {
+  const [projects, setProjects] = useState<Project[]>(defaultProjects);
+
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, 'site_settings', 'main'), (doc) => {
+      if (doc.exists()) {
+        const data = doc.data();
+        if (data.projects && data.projects.length > 0) {
+          setProjects(data.projects);
+        }
+      }
+    });
+    return () => unsub();
+  }, []);
   return (
     <section id="projects" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
