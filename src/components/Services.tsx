@@ -59,7 +59,7 @@ export default function Services() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, index) => (
-                <Link to="/services" key={index} className={`block group relative h-[300px] rounded-3xl overflow-hidden cursor-pointer ${service.orange ? 'bg-orange-500' : 'bg-gray-900'}`}>
+                <Link to="/services" key={index} className="block group relative h-[300px] rounded-3xl overflow-hidden cursor-pointer bg-gray-900">
                     {service.image && (
                         <img 
                             src={service.image} 

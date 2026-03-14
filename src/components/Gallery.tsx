@@ -1,3 +1,5 @@
+import React from 'react';
+import { motion } from 'framer-motion';
 import { db } from '../firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
 
